@@ -1,0 +1,25 @@
+def is_safe(queens, row, col):
+    for r in range(row):
+        c = queens[r]
+        if c == col or abs(c - col) == abs(r - row):
+            return False
+    return True
+
+def solve(queens, row, n):
+    if row == n: return True
+    for col in range(n):
+        if is_safe(queens, row, col):
+            queens[row] = col
+            if solve(queens, row + 1, n): return True
+    return False
+
+def print_board(queens, n):
+    for r in range(n):
+        print(" ".join("Q" if c == queens[r] else "." for c in range(n)))
+
+n = int(input("Enter number of queens: "))
+queens = [-1]*n
+if solve(queens, 0, n):
+    print_board(queens, n)
+else:
+    print(f"No solution exists for {n} queens.")
